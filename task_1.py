@@ -1,12 +1,12 @@
-from re import findall
-
-
-def domain_name(url):  # use regex for searching domain
-    item = findall(r"(?<=[sp]://|w{3}.)[^w{3}].+?(?=\.\w)", url)
-    return item[0]
+def domain_name(url):
+    replace_values = {"https://": "", "http://": "", "www.": ""}
+    for i, j in replace_values.items():  # clear protocol and sub-domain
+        url = url.replace(i, j)
+    return url.split('.')[0]
 
 
 # test
+
 assert domain_name("http://github.com/carbonfive/raygun") == "github"
 assert domain_name("http://www.zombie-bites.com") == "zombie-bites"
 assert domain_name("https://www.cnet.com") == "cnet"
